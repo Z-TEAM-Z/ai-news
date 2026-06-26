@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
 
-/* ── Design tokens（蓝色强调，灰白底） ── */
+/* ── Design tokens（蓝色强调，默认夜间） ── */
 :root {
   --bg: #ffffff;
   --surface: #ffffff;
@@ -68,6 +68,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --bg: #000000;
   --surface: #1d1d1f;
   --surface-2: #2d2d2f;

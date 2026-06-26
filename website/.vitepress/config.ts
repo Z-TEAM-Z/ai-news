@@ -13,7 +13,14 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   appearance: 'dark',
-  head: [['meta', { name: 'theme-color', content: '#000000' }]],
+  head: [
+    ['meta', { name: 'theme-color', content: '#000000' }],
+    [
+      'script',
+      {},
+      `(function(){try{var k='vitepress-theme-appearance',v=localStorage.getItem(k);if(!v||v==='auto')localStorage.setItem(k,'dark')}catch(e){}})()`,
+    ],
+  ],
   themeConfig: {
     siteTitle: 'AI-NEWS',
     notFound: {
