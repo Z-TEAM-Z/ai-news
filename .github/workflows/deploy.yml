@@ -40,7 +40,7 @@ jobs:
         run: npm run sync
 
       - name: Build site
-        run: vitepress build website
+        run: npx vitepress build website
 
       - name: Verify build output
         run: test -f website/.vitepress/dist/index.html && test -f website/.vitepress/dist/course/index.html && test -f website/.vitepress/dist/about/index.html
