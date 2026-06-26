@@ -1,8 +1,27 @@
+# Dependencies
+node_modules/
+
+# IDE / local tooling
 .agents/
 .cursor/
-node_modules/
-docs/.vitepress/dist/
-docs/.vitepress/cache/
-docs/news/
-docs/index.md
-docs/.vitepress/sidebar.generated.mjs
+.DS_Store
+
+# 旧 VitePress 目录（已迁移至 website/，忽略残留 cache）
+docs/
+
+# VitePress build output
+website/.vitepress/dist/
+website/.vitepress/cache/
+
+# ── 新闻：源文件在 news/YYYY-MM/*.md（需提交）
+#    构建时 sync-news.mjs 复制到 website/news/
+website/news/
+
+# ── 教程：源文件在 course/*.md（需提交，与 news/ 同级）
+#    构建时 sync-course.mjs 复制到 website/course/
+website/course/
+
+# 首页与侧栏由 sync 脚本生成
+website/index.md
+website/.vitepress/sidebar.generated.mjs
+website/.vitepress/sidebar.course.mjs

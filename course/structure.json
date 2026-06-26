@@ -1,0 +1,98 @@
+{
+  "title": "AI Agent 应用工程",
+  "subtitle": "从 API 调用到可上线 Agent 的系统课程",
+  "parts": [
+    {
+      "id": "part-0",
+      "title": "前置选修",
+      "summary": "非主线必修，按需查阅",
+      "modules": [
+        {
+          "dir": "00-prereq",
+          "short": "前置补充",
+          "summary": "Python、数学、NLP 史、训练概览"
+        }
+      ]
+    },
+    {
+      "id": "part-1",
+      "title": "阶段一 · 认知与接口",
+      "summary": "建立 Agent 心智模型，跑通模型 API",
+      "modules": [
+        {
+          "dir": "01-agent-cognition",
+          "short": "Agent 认知与选型",
+          "summary": "LLM 栈、Token、上下文、模型选型"
+        },
+        {
+          "dir": "02-api-prompt",
+          "short": "API 与 Prompt",
+          "summary": "流式、结构化输出、幻觉治理 + 实战"
+        }
+      ]
+    },
+    {
+      "id": "part-2",
+      "title": "阶段二 · 工具与知识",
+      "summary": "工具调用、MCP、RAG 与记忆",
+      "modules": [
+        {
+          "dir": "03-tools-mcp",
+          "short": "工具与 MCP",
+          "summary": "Function Calling、ReAct、MCP + 实战"
+        },
+        {
+          "dir": "04-rag-memory",
+          "short": "RAG 与记忆",
+          "summary": "检索增强、向量库、长期记忆 + 实战"
+        }
+      ]
+    },
+    {
+      "id": "part-3",
+      "title": "阶段三 · Agent 系统",
+      "summary": "Agent 架构、上下文工程与框架实战",
+      "modules": [
+        {
+          "dir": "05-agent-engineering",
+          "short": "Agent 架构",
+          "summary": "Agent Loop、上下文、Multi-Agent"
+        },
+        {
+          "dir": "06-frameworks",
+          "short": "框架实战",
+          "summary": "LangChain、LangGraph + 实战"
+        }
+      ]
+    },
+    {
+      "id": "part-4",
+      "title": "阶段四 · 上线与实战",
+      "summary": "评测观测、安全部署与场景项目",
+      "modules": [
+        {
+          "dir": "07-production",
+          "short": "评测与上线",
+          "summary": "Eval、Trace、护栏、成本、部署"
+        },
+        {
+          "dir": "08-agent-projects",
+          "short": "Agent 项目实战",
+          "summary": "翻译、审计、客服、销售等 Agent 场景"
+        }
+      ]
+    },
+    {
+      "id": "part-5",
+      "title": "选修",
+      "summary": "模型定制，非 Agent 主线必修",
+      "modules": [
+        {
+          "dir": "09-fine-tuning",
+          "short": "模型微调",
+          "summary": "LoRA、行业定制、推理优化"
+        }
+      ]
+    }
+  ]
+}
