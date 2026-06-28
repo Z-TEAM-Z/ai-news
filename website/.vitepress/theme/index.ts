@@ -9,7 +9,7 @@ const DesktopSupportTopBar = defineComponent({
     const show = ref(false)
 
     onMounted(() => {
-      const mq = window.matchMedia('(min-width: 769px)')
+      const mq = window.matchMedia('(min-width: 960px)')
       const update = () => {
         show.value = mq.matches
       }

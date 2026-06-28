@@ -121,6 +121,16 @@ body {
     top: var(--vp-nav-height);
     margin-top: 0;
   }
+
+  /* 侧栏展开时为固定顶栏留出空间，避免目录顶项被黑色导航挡住 */
+  .VPSidebar.open {
+    padding-top: calc(var(--vp-nav-height) + var(--space-4)) !important;
+  }
+
+  .Layout:has(.VPSidebar.open) .VPLocalNav {
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 @media (max-width: 767px) {
@@ -403,7 +413,7 @@ body {
   top: var(--vp-nav-height);
   left: 0;
   right: 0;
-  z-index: calc(var(--vp-z-index-local-nav) - 1);
+  z-index: calc(var(--vp-z-index-nav) - 1);
   margin: 0;
   padding: 0 clamp(16px, 3vw, 48px);
   background: var(--site-top-cta-bg);
@@ -451,13 +461,17 @@ body {
   font-size: 13px;
 }
 
-/* 全站内容区为置顶条留出空间 */
-.site-top-bar-layout .VPContent {
-  padding-top: calc(var(--vp-nav-height) + var(--site-top-cta-height)) !important;
-}
+/* 桌面端内容区为 CTA 条留出空间 */
+@media (min-width: 960px) {
+  .site-top-bar-layout .VPContent {
+    position: relative;
+    z-index: 1;
+    padding-top: calc(var(--vp-nav-height) + var(--site-top-cta-height)) !important;
+  }
 
-.site-top-bar-layout .VPHome .VPContent {
-  padding: 0 !important;
+  .site-top-bar-layout .VPHome .VPContent {
+    padding: 0 !important;
+  }
 }
 
 .about-page .about-cta,
@@ -1087,25 +1101,26 @@ body {
 }
 
 @media (min-width: 960px) {
-  /* 桌面侧栏需在 CTA 条之上，否则目录无法点击 */
-  .site-top-bar-layout .VPSidebar {
-    z-index: calc(var(--vp-z-index-nav) - 1) !important;
+  /* 置顶条全宽覆盖侧栏区域；侧栏内容下移到 CTA 下方 */
+  .site-top-bar-layout:has(.VPContent.has-sidebar) .VPSidebar {
+    padding-top: calc(var(--vp-nav-height) + var(--site-top-cta-height) + var(--space-4)) !important;
   }
 
-  /* CTA 不遮挡左侧固定侧栏区域 */
-  .site-top-bar-layout .site-top-cta {
-    left: var(--vp-sidebar-width);
+  /* curtain 默认高度仅覆盖 nav，加 CTA 后会形成黑块，故隐藏 */
+  .site-top-bar-layout:has(.VPContent.has-sidebar) .VPSidebar .curtain {
+    display: none;
+  }
+
+  /* 960–1279px 侧栏可见时，本地导航栏移到 CTA 下方 */
+  @media (max-width: 1279px) {
+    .site-top-bar-layout:has(.VPContent.has-sidebar) .VPLocalNav {
+      top: calc(var(--vp-nav-height) + var(--site-top-cta-height));
+    }
   }
 }
 
 .VPSidebar .curtain {
   background-color: var(--bg) !important;
-}
-
-@media (min-width: 960px) {
-  .VPSidebar {
-    padding-top: calc(var(--vp-nav-height) + var(--site-top-cta-height) + var(--space-4)) !important;
-  }
 }
 
 .VPSidebar .VPSidebarItem.level-0 {
@@ -1325,16 +1340,23 @@ body {
 }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
+@media (max-width: 959px) {
   :root {
     --site-top-cta-height: 0px;
   }
 
-  /* 有侧栏页由 VPLocalNav 让位，无侧栏页（关于等）由 VPContent 让位 */
+  /* 平板/手机不显示 CTA，避免与「目录」栏重叠 */
+  .site-top-cta {
+    display: none !important;
+  }
+
   .site-top-bar-layout .VPContent.has-sidebar {
     padding-top: 0 !important;
   }
+}
 
+@media (max-width: 768px) {
+  /* 无侧栏页（关于等）为固定导航让位 */
   .site-top-bar-layout .VPContent:not(.has-sidebar) {
     padding-top: var(--vp-nav-height) !important;
   }
