@@ -52,6 +52,7 @@ export default defineConfig({
       level: [2, 2],
       label: '章节索引',
     },
+    sidebarMenuLabel: '目录',
     footer: {
       message: `由 <a href="${GITHUB_ORG}" target="_blank" rel="noopener noreferrer">@zteam</a> 制作 · AI News · Agent教程 · <a href="/about/">关于我们</a> · <a href="${GITHUB_ORG}" target="_blank" rel="noopener noreferrer">关注</a> · <a href="${GITHUB_REPO}" target="_blank" rel="noopener noreferrer">Star</a>`,
     },

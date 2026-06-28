@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "sync": "node scripts/sync-news.mjs && node scripts/sync-course.mjs && node scripts/sync-about.mjs",
-    "dev": "npm run sync && vitepress dev website",
+    "dev": "vitepress dev website",
+    "dev:sync": "npm run sync && vitepress dev website",
     "build": "npm run sync && vitepress build website",
     "preview": "vitepress preview website"
   },

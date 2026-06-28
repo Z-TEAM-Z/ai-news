@@ -100,13 +100,89 @@ body {
 }
 
 /* ── Nav：单条全宽底边，避免与 divider / 标题线重叠 ── */
-.VPNav {
-  backdrop-filter: blur(12px);
-}
-
 .VPNavBar {
+  backdrop-filter: blur(12px);
   border-bottom: none !important;
   background-color: var(--bg) !important;
+}
+
+@media (max-width: 959px) {
+  /* 仅隐藏无侧栏页的 Return to top，保留教程/资讯的 Menu 按钮 */
+  .VPLocalNav.empty:not(.has-sidebar) {
+    display: none !important;
+  }
+
+  .VPLocalNav {
+    top: var(--vp-nav-height);
+    z-index: calc(var(--vp-z-index-nav) - 1);
+  }
+
+  .VPLocalNav.fixed {
+    top: var(--vp-nav-height);
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .VPLocalNav {
+    margin-top: var(--vp-nav-height);
+  }
+
+  .VPNav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: var(--vp-z-index-nav);
+  }
+
+  .VPNavBar {
+    pointer-events: auto;
+  }
+
+  /* 防止标题链接触层挡住右侧搜索/菜单 */
+  .VPNavBar .container > .title {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 58%;
+    overflow: hidden;
+  }
+
+  .VPNavBarTitle,
+  .VPNavBarTitle .title {
+    width: auto !important;
+    max-width: 100%;
+  }
+
+  .VPNavBar .container > .content {
+    flex: 1 0 auto;
+    min-width: 96px;
+  }
+
+  .VPNavBar .content-body {
+    pointer-events: auto !important;
+  }
+
+  .VPNavBarSearch,
+  .VPNavBarHamburger {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
+  .VPNavBarHamburger {
+    position: relative;
+    z-index: 2;
+  }
+
+  .VPNav:has(.VPNavBar.screen-open) {
+    z-index: var(--vp-z-index-backdrop) !important;
+  }
+
+  .VPNavScreen {
+    top: var(--vp-nav-height) !important;
+    z-index: 1;
+  }
 }
 
 .VPNavBar .content-body {
@@ -126,7 +202,13 @@ body {
 }
 
 .VPNavBarTitle {
-  width: 100%;
+  width: auto;
+}
+
+@media (min-width: 960px) {
+  .VPNavBarTitle {
+    width: 100%;
+  }
 }
 
 .VPNavBarTitle.has-sidebar .title {
@@ -321,7 +403,7 @@ body {
   top: var(--vp-nav-height);
   left: 0;
   right: 0;
-  z-index: calc(var(--vp-z-index-nav) - 1);
+  z-index: calc(var(--vp-z-index-local-nav) - 1);
   margin: 0;
   padding: 0 clamp(16px, 3vw, 48px);
   background: var(--site-top-cta-bg);
@@ -329,6 +411,11 @@ body {
   border-bottom: 1px solid var(--site-top-cta-line);
   box-shadow: inset 0 1px 0 var(--site-top-cta-inset);
   box-sizing: border-box;
+  pointer-events: none;
+}
+
+.site-top-cta a {
+  pointer-events: auto;
 }
 
 .site-top-cta-inner {
@@ -887,6 +974,34 @@ body {
   font-size: 14px;
 }
 
+@media (max-width: 768px) {
+  /* 宽表格允许横向滑动，避免「说明」等列被裁切 */
+  .vp-doc table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vp-doc table thead,
+  .vp-doc table tbody {
+    display: table;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .vp-doc table tr {
+    display: table-row;
+  }
+
+  .vp-doc table th,
+  .vp-doc table td {
+    display: table-cell;
+  }
+}
+
 .vp-doc thead {
   background: var(--surface-2);
 }
@@ -969,6 +1084,18 @@ body {
 .VPSidebar {
   background: var(--bg) !important;
   border-right: 1px solid var(--border) !important;
+}
+
+@media (min-width: 960px) {
+  /* 桌面侧栏需在 CTA 条之上，否则目录无法点击 */
+  .site-top-bar-layout .VPSidebar {
+    z-index: calc(var(--vp-z-index-nav) - 1) !important;
+  }
+
+  /* CTA 不遮挡左侧固定侧栏区域 */
+  .site-top-bar-layout .site-top-cta {
+    left: var(--vp-sidebar-width);
+  }
 }
 
 .VPSidebar .curtain {
@@ -1198,6 +1325,36 @@ body {
 }
 
 /* ── Responsive ── */
+@media (max-width: 768px) {
+  :root {
+    --site-top-cta-height: 0px;
+  }
+
+  /* 有侧栏页由 VPLocalNav 让位，无侧栏页（关于等）由 VPContent 让位 */
+  .site-top-bar-layout .VPContent.has-sidebar {
+    padding-top: 0 !important;
+  }
+
+  .site-top-bar-layout .VPContent:not(.has-sidebar) {
+    padding-top: var(--vp-nav-height) !important;
+  }
+
+  .home-layout .home-wrap {
+    padding-top: calc(var(--vp-nav-height) + 16px);
+  }
+
+  .VPHome .vp-doc .home-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .VPHome .vp-doc .home-headline {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+}
+
 @media (max-width: 720px) {
   .home-pillars {
     grid-template-columns: 1fr;
@@ -1205,20 +1362,8 @@ body {
 }
 
 @media (max-width: 640px) {
-  :root {
-    --site-top-cta-height: 64px;
-  }
-
   .home-wrap {
-    padding: calc(var(--vp-nav-height) + var(--site-top-cta-height) + 8px) 16px 36px;
-  }
-
-  .site-top-cta-inner {
-    padding: 6px 10px !important;
-  }
-
-  .site-top-cta .home-cta-text {
-    font-size: 13px;
+    padding: calc(var(--vp-nav-height) + 16px) 16px 36px;
   }
 
   .home-hero {
