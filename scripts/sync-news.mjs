@@ -141,7 +141,7 @@ function buildNewsIndexMarkdown(months, monthFiles) {
     '',
     '# AI资讯',
     '',
-    '<p class="page-lead">每日 AI 模型、产品、论文、就业趋势与行业动态摘要。</p>',
+    '<p class="page-lead">岗位趋势、行业动态、热门项目、产品与模型发布 — 面向前端/全栈程序员。</p>',
     '',
   ]
 
@@ -205,20 +205,20 @@ function buildCourseChaptersHtml() {
 
 const HOME_PILLARS = [
   {
-    title: '模型与产品',
-    desc: '追踪 OpenAI、Anthropic、Google 等全球一线公司的模型发布、产品迭代与 API 变更，每条资讯优先引用官方博客与公告核验',
-  },
-  {
-    title: '论文与开源',
-    desc: '整理 arXiv 论文速递与 GitHub Trending 热门仓库，结合 HelloGitHub 等榜单解读开源生态中的可复现实验与工程进展',
-  },
-  {
-    title: '就业趋势',
-    desc: '追踪 AI 对程序员岗位需求、招聘 HC、裁员与技能栈/薪资变化，优先引用 Indeed Hiring Lab、LinkedIn、Layoffs.fyi 等可核验来源',
+    title: '岗位趋势',
+    desc: '追踪 AI 对程序员岗位、裁员、技能栈与 comp 的影响，优先 Indeed Hiring Lab、Layoffs.fyi、TechCrunch 等可核验来源',
   },
   {
     title: '行业动态',
-    desc: '汇总 AI 监管政策、投融资事件、模型安全议题与主流 benchmark 排名变化，按日归档形成可检索的行业快照',
+    desc: '汇总 AI 监管、算力、融资、诉讼与市场结构变化，按日归档',
+  },
+  {
+    title: '热门项目',
+    desc: 'GitHub Trending 与 HelloGitHub 中的 AI 开源仓库，优先 MCP、agent IDE、Web agent、TypeScript 工具',
+  },
+  {
+    title: '模型与产品',
+    desc: '模型发布、API 定价与 Cursor/Codex/ChatGPT 等产品更新，优先官方来源核验',
   },
 ]
 
@@ -235,7 +235,7 @@ function buildIndexMarkdown(months, monthFiles) {
     '<div class="home-wrap">',
     '<header class="home-hero">',
     '<p class="home-eyebrow">AI 资讯日报</p>',
-    '<h1 class="home-headline">每日 AI 模型、产品、论文、就业与行业动态</h1>',
+    '<h1 class="home-headline">岗位趋势 · 行业动态 · 热门项目 · 产品与模型</h1>',
     '<p class="home-sub">联网检索 · 来源核验 · 按日归档</p>',
     '<div class="home-actions">',
     `<a class="home-btn home-btn--primary" href="${latestLink}">阅读最新日报</a>`,

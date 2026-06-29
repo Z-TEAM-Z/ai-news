@@ -1,15 +1,36 @@
 /** 资讯日报固定章节顺序 */
 export const NEWS_SECTIONS = [
-  '模型发布',
-  '产品更新',
-  '论文与研究',
-  '就业趋势',
+  '岗位趋势',
   '行业动态',
-  'AI 热门开源项目',
+  '热门项目',
+  '产品更新',
+  '模型发布',
+  '论文研究',
 ]
 
+/** 旧栏目名 → 新栏目名（存量迁移） */
+export const LEGACY_SECTION_ALIASES = {
+  就业趋势: '岗位趋势',
+  'AI 热门开源项目': '热门项目',
+  '论文与研究': '论文研究',
+}
+
+export function normalizeSectionName(name) {
+  return LEGACY_SECTION_ALIASES[name] || name
+}
+
 export function renderSections(reportDate, sections, renderItem) {
-  const byName = new Map(sections.map((s) => [s.name, s.items]))
+  const byName = new Map(NEWS_SECTIONS.map((n) => [n, []]))
+
+  for (const sec of sections) {
+    const key = normalizeSectionName(sec.name)
+    if (!byName.has(key)) continue
+    const list = byName.get(key)
+    for (const item of sec.items || []) {
+      list.push(item)
+    }
+  }
+
   const parts = [
     `# AI 资讯日报：${reportDate}`,
     '',
@@ -25,7 +46,13 @@ export function renderSections(reportDate, sections, renderItem) {
       continue
     }
     for (const item of items) {
-      parts.push(typeof renderItem === 'function' ? renderItem(item) : item)
+      if (typeof renderItem === 'function') {
+        parts.push(renderItem(item))
+      } else if (item?.raw) {
+        parts.push(item.raw, '')
+      } else {
+        parts.push(String(item), '')
+      }
     }
   }
 

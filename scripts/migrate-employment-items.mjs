@@ -1,11 +1,11 @@
 /**
- * 将行业动态中就业/招聘/人才类条目迁入「就业趋势」
+ * 将行业动态中岗位/招聘类条目迁入「岗位趋势」
  * 用法：node scripts/migrate-employment-items.mjs
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { NEWS_SECTIONS } from './news-sections.mjs'
+import { NEWS_SECTIONS, normalizeSectionName } from './news-sections.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const newsRoot = path.join(root, 'news')
@@ -47,8 +47,9 @@ function parseReport(content) {
 
   for (const part of parts) {
     const m = part.match(/^## ([^\n]+)\n([\s\S]*)/)
-    if (!m || !byName.has(m[1].trim())) continue
-    const name = m[1].trim()
+    if (!m) continue
+    const name = normalizeSectionName(m[1].trim())
+    if (!byName.has(name)) continue
     const body = m[2]
     const chunks = body
       .split(/(?=<div class="news-item">)/)
@@ -65,7 +66,7 @@ function parseReport(content) {
 
 function migrate(byName) {
   const industry = byName.get('行业动态') || []
-  const employment = byName.get('就业趋势') || []
+  const employment = byName.get('岗位趋势') || []
   const keep = []
   const moved = []
 
@@ -78,7 +79,7 @@ function migrate(byName) {
   }
 
   byName.set('行业动态', keep)
-  byName.set('就业趋势', [...employment.filter((i) => i.title !== '（本日无新条目）'), ...moved])
+  byName.set('岗位趋势', [...employment.filter((i) => i.title !== '（本日无新条目）'), ...moved])
   return moved.length
 }
 

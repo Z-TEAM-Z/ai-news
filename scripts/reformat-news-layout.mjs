@@ -5,7 +5,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { renderSections } from './news-sections.mjs'
+import { renderSections, normalizeSectionName } from './news-sections.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const newsRoot = path.join(root, 'news')
@@ -104,6 +104,7 @@ function parseReport(content) {
     const secMatch = part.match(/^## ([^\n]+)\n([\s\S]*)/)
     if (!secMatch) continue
     const name = secMatch[1].trim()
+    const normalized = normalizeSectionName(name)
     const body = secMatch[2]
     const chunks = body.split(/\n(?=<div class="news-item">|\n### )/).filter(Boolean)
     const items = []
@@ -111,7 +112,7 @@ function parseReport(content) {
       const item = parseItem(chunk.trim())
       if (item) items.push(item)
     }
-    sections.push({ name, items })
+    sections.push({ name: normalized, items })
   }
 
   return { reportDate, sections }
